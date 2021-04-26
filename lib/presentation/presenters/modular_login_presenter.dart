@@ -2,36 +2,20 @@ import 'package:mesa_news/domain/usercases/current_account.dart';
 import 'package:meta/meta.dart';
 
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:rxdart/subjects.dart';
 
 import '../../presentation/protocols/validation.dart';
 import '../../domain/helpers/domain_error.dart';
 import '../../domain/usercases/authentication.dart';
 import '../../ui/helpers/ui_errors.dart';
 import '../../ui/pages/login/presenter/login_presenter.dart';
+import 'mixins/mixin_modular_stream_validates.dart';
 
-class LoginController extends Disposable implements LoginPresenter {
+class ModularLoginController extends Disposable with ModularStreamValidates implements LoginPresenter {
   final Validation validation;
   final Authentication authentication;
   final CurrentAccount currentAccount;
 
-  LoginController({@required this.validation, @required this.authentication, @required this.currentAccount});
-
-  final _emailErrorController = BehaviorSubject<UIError>();
-  Sink<UIError> get inEmailError => _emailErrorController.sink;
-  Stream<UIError> get outEmailError => _emailErrorController.stream;
-
-  final _passwordErrorController = BehaviorSubject<UIError>();
-  Sink<UIError> get inPasswordError => _passwordErrorController.sink;
-  Stream<UIError> get outPasswordError => _passwordErrorController.stream;
-
-  final _isLoadingController = BehaviorSubject<bool>.seeded(false);
-  Sink<bool> get inIsLoading => _isLoadingController.sink;
-  Stream<bool> get outIsLoading => _isLoadingController.stream;
-
-  final _isFormValidController = BehaviorSubject<bool>.seeded(false);
-  Sink<bool> get inIsFormValid => _isFormValidController.sink;
-  Stream<bool> get outIsFormValid => _isFormValidController.stream;
+  ModularLoginController({@required this.validation, @required this.authentication, @required this.currentAccount});
 
   String _email;
   String _password;
@@ -68,21 +52,16 @@ class LoginController extends Disposable implements LoginPresenter {
   }
 
   @override
-  void goToSignUp() {
-    // TODO: implement goToSignUp
-  }
-
-  @override
   void validateEmail(String email) {
     _email = email;
-    _emailErrorController.add(_validateField('email'));
+    inEmailError.add(_validateField('email'));
     _validateForm();
   }
 
   @override
   void validatePassword(String password) {
     _password = password;
-    _passwordErrorController.add(_validateField('password'));
+    inPasswordError.add(_validateField('password'));
     _validateForm();
   }
 
@@ -105,18 +84,12 @@ class LoginController extends Disposable implements LoginPresenter {
 
   void _validateForm() {
     inIsFormValid.add(
-      _emailErrorController.valueWrapper?.value == null &&
-          _passwordErrorController.valueWrapper?.value == null &&
-          _email != null &&
-          _password != null,
+      getEmailError == null && getPasswordError == null && _email != null && _password != null,
     );
   }
 
   @override
   void dispose() {
-    _emailErrorController?.close();
-    _passwordErrorController?.close();
-    _isLoadingController?.close();
-    _isFormValidController?.close();
+    // TODO: implement dispose
   }
 }

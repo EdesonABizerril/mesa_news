@@ -15,7 +15,7 @@ import '../infra/http/base_data.dart';
 import '../infra/http/http_adapter.dart';
 import '../infra/cache/secure_storage_adapter.dart';
 import '../presentation/protocols/validation.dart';
-import '../presentation/presenters/login_controller.dart';
+import '../presentation/presenters/modular_login_presenter.dart';
 import '../ui/pages/login/login_page.dart';
 import '../validation/validators/validate_composite.dart';
 
@@ -30,7 +30,7 @@ class AppModule extends Module {
     Bind.factory((i) => FlutterSecureStorage()),
     Bind.factory<CacheSecureStorage>((i) => SecureStorageAdapter(secureStorage: i.get())),
     Bind.factory<CurrentAccount>((i) => LocalCurrentAccount(cacheSecureStorage: i.get())),
-    Bind.singleton((i) => LoginController(validation: i.get(), authentication: i.get(), currentAccount: i.get())),
+    Bind.singleton((i) => ModularLoginController(validation: i.get(), authentication: i.get(), currentAccount: i.get())),
   ];
 
   @override

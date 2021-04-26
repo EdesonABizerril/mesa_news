@@ -1,6 +1,6 @@
 import 'package:mesa_news/ui/helpers/ui_errors.dart';
 
-abstract class LoginPresenter {
+abstract class SignUpPresenter {
   Sink<UIError> get inEmailError;
   Stream<UIError> get outEmailError;
 
@@ -14,9 +14,11 @@ abstract class LoginPresenter {
   Sink<bool> get inIsFormValid;
   Stream<bool> get outIsFormValid;
 
-  Future<void> auth();
-  Future<void> checkAccount({int durationInSeconds = 2});
-
+  void validateName(String name);
   void validateEmail(String email);
   void validatePassword(String password);
+  void validatePasswordConfirmation(String passwordConfirmation);
+  void validateBirthDate(String birthData);
+  Future<void> signUp();
+
 }
