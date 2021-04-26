@@ -4,7 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mesa_news/main/helpers/theme_colors.dart';
 import 'package:mesa_news/ui/pages/login/components/login_access_buttons.dart';
 
-import 'presenter/login_presenter.dart';
+import 'login_presenter.dart';
 
 class LoginPage extends StatelessWidget {
   final loginPresenter = Modular.get<LoginPresenter>();

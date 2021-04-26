@@ -1,23 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mesa_news/main/helpers/theme_colors.dart';
-import 'package:mesa_news/ui/pages/login/login_presenter.dart';
+import 'package:mesa_news/ui/pages/sign_up/sign_up_presenter.dart';
 
-class LoginButton extends StatelessWidget {
+class SignUpButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final loginPresenter = Modular.get<LoginPresenter>();
+    final signUpPresenter = Modular.get<SignUpPresenter>();
 
     return Container(
       margin: EdgeInsets.only(left: 16, right: 16),
       child: StreamBuilder<bool>(
-          stream: loginPresenter.outIsFormValid,
+          stream: signUpPresenter.outIsFormValid,
           initialData: false,
           builder: (context, snapshot) {
             return InkWell(
               radius: 5,
               child: StreamBuilder<bool>(
-                  stream: loginPresenter.outIsLoading,
+                  stream: signUpPresenter.outIsLoading,
                   initialData: false,
                   builder: (context, isLoading) {
                     return Container(
@@ -29,7 +29,7 @@ class LoginButton extends StatelessWidget {
                               ),
                             )
                           : Text(
-                              "Login",
+                              "Cadastrar",
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 16,
@@ -46,7 +46,7 @@ class LoginButton extends StatelessWidget {
                           )),
                     );
                   }),
-              onTap: snapshot.data == true ? (!loginPresenter.getIsLoading ? loginPresenter.auth : null) : null,
+              onTap: snapshot.data == true ? (!signUpPresenter.getIsLoading ? signUpPresenter.signUp : null) : null,
             );
           }),
     );

@@ -7,7 +7,7 @@ import '../../presentation/protocols/validation.dart';
 import '../../domain/helpers/domain_error.dart';
 import '../../domain/usercases/authentication.dart';
 import '../../ui/helpers/ui_errors.dart';
-import '../../ui/pages/login/presenter/login_presenter.dart';
+import '../../ui/pages/login/login_presenter.dart';
 import 'mixins/mixin_modular_stream_validates.dart';
 
 class ModularLoginController extends Disposable with ModularStreamValidates implements LoginPresenter {

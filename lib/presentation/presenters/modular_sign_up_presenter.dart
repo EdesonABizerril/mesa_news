@@ -4,7 +4,7 @@ import 'package:mesa_news/domain/usercases/add_account.dart';
 import 'package:mesa_news/domain/usercases/current_account.dart';
 import 'package:mesa_news/presentation/protocols/validation.dart';
 import 'package:mesa_news/ui/helpers/ui_errors.dart';
-import 'package:mesa_news/ui/pages/login/presenter/sign_up_presenter.dart';
+import 'package:mesa_news/ui/pages/sign_up/sign_up_presenter.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:meta/meta.dart';
 
@@ -30,6 +30,11 @@ class ModularSignUpPresenter extends Disposable with ModularStreamValidates impl
   Sink<UIError> get inPasswordConfirmationError => _passwordConfirmationErrorController.sink;
   Stream<UIError> get outPasswordConfirmationError => _passwordConfirmationErrorController.stream;
   UIError get getPasswordConfirmationError => _passwordConfirmationErrorController.valueWrapper?.value;
+
+  final _birthDateErrorController = BehaviorSubject<UIError>();
+  Sink<UIError> get inBirthDateError => _birthDateErrorController.sink;
+  Stream<UIError> get outBirthDateError => _birthDateErrorController.stream;
+  UIError get getBirthDateError => _birthDateErrorController.valueWrapper?.value;
 
   String _email;
   String _name;
@@ -101,6 +106,7 @@ class ModularSignUpPresenter extends Disposable with ModularStreamValidates impl
         birthDate: _birthDate,
       ));
       await currentAccount.save(account);
+      Modular.to.pushNamed("/feed");
     } on DomainError catch (error) {
       switch (error) {
         case DomainError.emailInUse:
@@ -127,6 +133,7 @@ class ModularSignUpPresenter extends Disposable with ModularStreamValidates impl
   void dispose() {
     _nameErrorController?.close();
     _passwordConfirmationErrorController?.close();
+    _birthDateErrorController?.close();
   }
 
 

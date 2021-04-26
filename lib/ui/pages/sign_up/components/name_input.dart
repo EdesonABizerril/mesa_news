@@ -2,15 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mesa_news/main/helpers/theme_colors.dart';
 import 'package:mesa_news/ui/helpers/ui_errors.dart';
-import 'package:mesa_news/ui/pages/login/login_presenter.dart';
 
-class EmailInput extends StatelessWidget {
+import '../sign_up_presenter.dart';
+
+class NameInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final presenter = Modular.get<LoginPresenter>();
+    final presenter = Modular.get<SignUpPresenter>();
 
     return StreamBuilder<UIError>(
-      stream: presenter.outEmailError,
+      stream: presenter.outNameError,
       builder: (context, snapshot) {
         return Container(
           margin: EdgeInsets.only(left: 16, right: 16),
@@ -18,7 +19,7 @@ class EmailInput extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "E-mail",
+                "Nome",
                 style: TextStyle(
                   color: ThemeColors.of(context).fontSecondary,
                   fontSize: 14,
@@ -30,7 +31,7 @@ class EmailInput extends StatelessWidget {
                 children: [
                   Container(
                     height: 48,
-                    margin: snapshot.hasData? EdgeInsets.only(bottom: 10): EdgeInsets.zero,
+                    margin: snapshot.hasData ? EdgeInsets.only(bottom: 10) : EdgeInsets.zero,
                     decoration: BoxDecoration(
                       color: ThemeColors.of(context).backgroundField,
                       borderRadius: BorderRadius.circular(5),
@@ -38,17 +39,16 @@ class EmailInput extends StatelessWidget {
                   ),
                   TextFormField(
                     textAlign: TextAlign.start,
-                    textAlignVertical: snapshot.hasData? TextAlignVertical.bottom: TextAlignVertical.top,
+                    textAlignVertical: snapshot.hasData ? TextAlignVertical.bottom : TextAlignVertical.top,
                     decoration: InputDecoration(
                       errorText: snapshot.hasData ? snapshot.data.description : null,
-
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(5),
                         borderSide: BorderSide.none,
                       ),
                     ),
-                    keyboardType: TextInputType.emailAddress,
-                    onChanged: presenter.validateEmail,
+                    keyboardType: TextInputType.name,
+                    onChanged: presenter.validateName,
                   ),
                 ],
               ),

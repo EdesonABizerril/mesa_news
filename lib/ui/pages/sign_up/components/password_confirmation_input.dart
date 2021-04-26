@@ -3,14 +3,16 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mesa_news/main/helpers/theme_colors.dart';
 import 'package:mesa_news/ui/helpers/ui_errors.dart';
-import 'package:mesa_news/ui/pages/login/login_presenter.dart';
 
-class PasswordInput extends StatelessWidget {
+import '../sign_up_presenter.dart';
+
+class PasswordConfirmationInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final presenter = Modular.get<LoginPresenter>();
+    final presenter = Modular.get<SignUpPresenter>();
+
     return StreamBuilder<UIError>(
-        stream: presenter.outPasswordError,
+        stream: presenter.outPasswordConfirmationError,
         builder: (context, snapshot) {
           return Container(
             margin: EdgeInsets.only(left: 16, right: 16),
@@ -18,7 +20,7 @@ class PasswordInput extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Senha",
+                  "Confirmar senha",
                   style: TextStyle(
                     color: ThemeColors.of(context).fontSecondary,
                     fontSize: 14,
@@ -47,7 +49,7 @@ class PasswordInput extends StatelessWidget {
                         ),
                       ),
                       obscureText: true,
-                      onChanged: presenter.validatePassword,
+                      onChanged: presenter.validatePasswordConfirmation,
                     ),
                   ],
                 ),
