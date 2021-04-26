@@ -1,6 +1,12 @@
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart';
+import 'package:mesa_news/data/cache/cache_secure_storage.dart';
+import 'package:mesa_news/data/usercases/local_current_account.dart';
+import 'package:mesa_news/domain/usercases/current_account.dart';
+import 'package:mesa_news/ui/pages/feed/feed_page.dart';
+import 'package:mesa_news/ui/pages/login/sign_in_page.dart';
+import 'package:mesa_news/ui/pages/login/sign_up_page.dart';
 
 import '../data/http/http_client.dart';
 import '../data/usercases/remote_authentication.dart';
@@ -22,12 +28,16 @@ class AppModule extends Module {
         (i) => RemoteAuthentication(httpClient: i.get<HttpClient>(), url: makeApiUrl('signin'))),
     Bind.factory<Validation>((i) => ValidationComposite()),
     Bind.factory((i) => FlutterSecureStorage()),
-    Bind.singleton((i) => LoginController(validation: i.get<Validation>(), authentication: i.get<Authentication>())),
-    Bind.lazySingleton((i) => SecureStorageAdapter(secureStorage: i.get())),
+    Bind.factory<CacheSecureStorage>((i) => SecureStorageAdapter(secureStorage: i.get())),
+    Bind.factory<CurrentAccount>((i) => LocalCurrentAccount(cacheSecureStorage: i.get())),
+    Bind.singleton((i) => LoginController(validation: i.get(), authentication: i.get(), currentAccount: i.get())),
   ];
 
   @override
   final List<ModularRoute> routes = [
     ChildRoute('/', child: (_, __) => LoginPage()),
+    ChildRoute('/signIn', child: (_, __) => SignInPage()),
+    ChildRoute('/signUp', child: (_, __) => SignUpPage()),
+    ChildRoute('/feed', child: (_, __) => FeedPage()),
   ];
 }
