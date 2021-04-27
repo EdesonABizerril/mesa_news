@@ -4,6 +4,7 @@ import 'package:mesa_news/ui/pages/components/custom_app_bar.dart';
 import 'package:mesa_news/ui/pages/sign_up/components/birth_date_input.dart';
 
 import 'components/email_input.dart';
+import 'components/name_input.dart';
 import 'components/password_confirmation_input.dart';
 import 'components/password_input.dart';
 import 'components/signup_button.dart';
@@ -21,31 +22,31 @@ class SignUpPage extends StatelessWidget {
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(vertical: 40),
-          child: Padding(
-            padding: const EdgeInsets.only(top: 55.0),
-            child: Form(
-              child: Column(
-                children: <Widget>[
-                  BirthDateInput(),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 26),
-                    child: EmailInput(),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 26),
-                    child: PasswordInput(),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 26),
-                    child: PasswordConfirmationInput(),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 26),
-                    child: BirthDateInput(),
-                  ),
-                  SignUpButton(),
-                ],
-              ),
+          child: Form(
+            child: Column(
+              children: <Widget>[
+                NameInput(),
+                Padding(
+                  padding: const EdgeInsets.only(top: 26),
+                  child: EmailInput(),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 26),
+                  child: PasswordInput(),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 26),
+                  child: PasswordConfirmationInput(),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 26),
+                  child: BirthDateInput(),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 32),
+                  child: SignUpButton(),
+                ),
+              ],
             ),
           ),
         ),

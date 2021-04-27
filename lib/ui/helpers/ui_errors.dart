@@ -13,7 +13,7 @@ extension UIErrorExtension on UIError {
       case UIError.invalidField: return 'Campo inválido';
       case UIError.invalidCredentials: return 'Credenciais inválidas.';
       case UIError.emailInUse: return 'O email já está em uso.';
-      default: return 'Algo errado aconteceu. Tente novamente em breve.';
+      default: return 'Algo errado aconteceu. Verifique sua conexão.';
     }
   }
 }

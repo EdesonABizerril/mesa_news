@@ -25,7 +25,7 @@ class HttpAdapter implements HttpClient {
         futureResponse = client.put(Uri.parse(url), headers: defaultHeaders, body: jsonBody);
       }
       if (futureResponse != null) {
-        response = await futureResponse.timeout(Duration(seconds: 10));
+        response = await futureResponse.timeout(Duration(seconds: 20));
       }
     } catch (error) {
       throw HttpError.serverError;
@@ -36,6 +36,8 @@ class HttpAdapter implements HttpClient {
   dynamic _handleResponse(Response response) {
     switch (response.statusCode) {
       case 200:
+        return response.body.isEmpty ? null : jsonDecode(response.body);
+      case 201:
         return response.body.isEmpty ? null : jsonDecode(response.body);
       case 204:
         return null;

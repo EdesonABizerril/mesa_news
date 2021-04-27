@@ -9,14 +9,16 @@ class ValidationComposite implements Validation {
 
   @override
   ValidationError validate({@required String field, @required Map input}) {
-    _listFieldValidations = _makeLoginValidations();
+    _listFieldValidations = _makeListFieldsValidations();
 
     return _validateProcess(field, input);
   }
 
-  List<FieldValidation> _makeLoginValidations() => [
+  List<FieldValidation> _makeListFieldsValidations() => [
+        ...ValidationBuilder.field('name').required().min(2).build(),
         ...ValidationBuilder.field('email').required().email().build(),
-        ...ValidationBuilder.field('password').required().min(3).build()
+        ...ValidationBuilder.field('password').required().min(6).build(),
+        ...ValidationBuilder.field('passwordConfirmation').required().min(6).build(),
       ];
 
   ValidationError _validateProcess(String field, Map input) {

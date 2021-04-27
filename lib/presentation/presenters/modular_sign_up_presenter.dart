@@ -1,4 +1,5 @@
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:mesa_news/data/cache/cache_storage.dart';
 import 'package:mesa_news/domain/helpers/domain_error.dart';
 import 'package:mesa_news/domain/usercases/add_account.dart';
 import 'package:mesa_news/domain/usercases/current_account.dart';
@@ -14,11 +15,13 @@ class ModularSignUpPresenter extends Disposable with ModularStreamValidates impl
   final Validation validation;
   final AddAccount addAccount;
   final CurrentAccount currentAccount;
+  final CacheStorage cacheStorage;
 
   ModularSignUpPresenter({
     @required this.validation,
     @required this.addAccount,
     @required this.currentAccount,
+    @required this.cacheStorage,
   });
 
   final _nameErrorController = BehaviorSubject<UIError>();
@@ -40,7 +43,7 @@ class ModularSignUpPresenter extends Disposable with ModularStreamValidates impl
   String _name;
   String _password;
   String _passwordConfirmation;
-  String _birthDate;
+  String _birthDate = "";
 
   void validateEmail(String email) {
     _email = email;
@@ -62,6 +65,10 @@ class ModularSignUpPresenter extends Disposable with ModularStreamValidates impl
 
   void validatePasswordConfirmation(String passwordConfirmation) {
     _passwordConfirmation = passwordConfirmation;
+    if (passwordConfirmation != _password) {
+      inPasswordConfirmationError.add(UIError.invalidCredentials);
+      return;
+    }
     inPasswordConfirmationError.add(_validateField('passwordConfirmation'));
     _validateForm();
   }
@@ -102,10 +109,9 @@ class ModularSignUpPresenter extends Disposable with ModularStreamValidates impl
         name: _name,
         email: _email,
         password: _password,
-        passwordConfirmation: _passwordConfirmation,
-        birthDate: _birthDate,
       ));
       await currentAccount.save(account);
+      if (_birthDate.isNotEmpty) await cacheStorage.put(key: "birthDate", value: _birthDate);
       Modular.to.pushNamed("/feed");
     } on DomainError catch (error) {
       switch (error) {
@@ -116,8 +122,8 @@ class ModularSignUpPresenter extends Disposable with ModularStreamValidates impl
           inEmailError.add(UIError.unexpected);
           break;
       }
-      inIsLoading.add(false);
     }
+      inIsLoading.add(false);
   }
 
   @override
@@ -128,14 +134,10 @@ class ModularSignUpPresenter extends Disposable with ModularStreamValidates impl
     // TODO: use the class lib/validation/validators/date_validation.dart
   }
 
-
   @override
   void dispose() {
     _nameErrorController?.close();
     _passwordConfirmationErrorController?.close();
     _birthDateErrorController?.close();
   }
-
-
-
 }

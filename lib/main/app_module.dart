@@ -2,10 +2,12 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart';
 import 'package:mesa_news/data/cache/cache_secure_storage.dart';
+import 'package:mesa_news/data/cache/cache_storage.dart';
 import 'package:mesa_news/data/usercases/local_current_account.dart';
 import 'package:mesa_news/data/usercases/remote_add_account.dart';
 import 'package:mesa_news/domain/usercases/add_account.dart';
 import 'package:mesa_news/domain/usercases/current_account.dart';
+import 'package:mesa_news/infra/cache/local_storage_adapter.dart';
 import 'package:mesa_news/ui/pages/feed/feed_page.dart';
 import 'package:mesa_news/ui/pages/login/login_presenter.dart';
 import 'package:mesa_news/ui/pages/login/sign_in_page.dart';
@@ -34,12 +36,13 @@ class AppModule extends Module {
     Bind.factory<Validation>((i) => ValidationComposite()),
     Bind.factory((i) => FlutterSecureStorage()),
     Bind.factory<CacheSecureStorage>((i) => SecureStorageAdapter(secureStorage: i.get())),
+    Bind.factory<CacheStorage>((i) => LocalStorageAdapter()),
     Bind.factory<CurrentAccount>((i) => LocalCurrentAccount(cacheSecureStorage: i.get())),
     Bind.factory<AddAccount>((i) => RemoteAddAccount(httpClient: i.get(), url: makeApiUrl('signup'))),
     Bind.singleton<LoginPresenter>(
         (i) => ModularLoginController(validation: i.get(), authentication: i.get(), currentAccount: i.get())),
     Bind.singleton<SignUpPresenter>(
-        (i) => ModularSignUpPresenter(validation: i.get(), addAccount: i.get(), currentAccount: i.get())),
+        (i) => ModularSignUpPresenter(validation: i.get(), addAccount: i.get(), currentAccount: i.get(), cacheStorage: i.get())),
   ];
 
   @override
