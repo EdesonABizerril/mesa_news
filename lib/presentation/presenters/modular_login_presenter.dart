@@ -36,8 +36,8 @@ class ModularLoginController extends Disposable with ModularStreamValidates impl
           inEmailError.add(UIError.requiredField);
           break;
       }
-      inIsLoading.add(true);
     }
+      inIsLoading.add(false);
   }
 
   Future<bool> checkAccount({int durationInSeconds = 2}) async {
@@ -45,7 +45,7 @@ class ModularLoginController extends Disposable with ModularStreamValidates impl
     try {
       final account = await currentAccount.load();
       if (account?.token != null) Modular.to.pushReplacementNamed('/feed');
-      return false;
+      return null;
     } catch (error) {
       return false;
     }
