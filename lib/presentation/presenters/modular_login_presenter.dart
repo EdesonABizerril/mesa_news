@@ -8,9 +8,10 @@ import '../../domain/helpers/domain_error.dart';
 import '../../domain/usercases/authentication.dart';
 import '../../ui/helpers/ui_errors.dart';
 import '../../ui/pages/login/login_presenter.dart';
+import 'mixins/mixin_modular_loading_stream.dart';
 import 'mixins/mixin_modular_stream_validates.dart';
 
-class ModularLoginController extends Disposable with ModularStreamValidates implements LoginPresenter {
+class ModularLoginController extends Disposable with ModularStreamValidates, ModularLoadingStream implements LoginPresenter {
   final Validation validation;
   final Authentication authentication;
   final CurrentAccount currentAccount;
@@ -90,6 +91,6 @@ class ModularLoginController extends Disposable with ModularStreamValidates impl
 
   @override
   void dispose() {
-    // TODO: implement dispose
+    loadingDispose();
   }
 }

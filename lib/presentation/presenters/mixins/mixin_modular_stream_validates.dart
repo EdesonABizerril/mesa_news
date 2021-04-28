@@ -13,11 +13,6 @@ mixin ModularStreamValidates on Disposable {
   Stream<UIError> get outPasswordError => _passwordErrorController.stream;
   UIError get getPasswordError => _passwordErrorController.valueWrapper?.value;
 
-  final _isLoadingController = BehaviorSubject<bool>.seeded(false);
-  Sink<bool> get inIsLoading => _isLoadingController.sink;
-  Stream<bool> get outIsLoading => _isLoadingController.stream;
-  bool get getIsLoading => _isLoadingController.valueWrapper.value;
-
   final _isFormValidController = BehaviorSubject<bool>.seeded(false);
   Sink<bool> get inIsFormValid => _isFormValidController.sink;
   Stream<bool> get outIsFormValid => _isFormValidController.stream;
@@ -26,7 +21,6 @@ mixin ModularStreamValidates on Disposable {
   void dispose() {
     _emailErrorController?.close();
     _passwordErrorController?.close();
-    _isLoadingController?.close();
     _isFormValidController?.close();
   }
 
