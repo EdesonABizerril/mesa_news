@@ -1,5 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+
 import '../post_viewmodel.dart';
 import 'highlight_post_item.dart';
 
@@ -35,7 +36,6 @@ class HeaderBox extends StatelessWidget {
           ),
           items: listPostViewModel.map((viewModel) => CardHighlightPost(postViewModel: viewModel)).toList(),
         ),
-
         Container(
           margin: EdgeInsets.only(left: 16, top: 30, bottom: 15),
           child: Text(

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:mesa_news/main/helpers/theme_colors.dart';
-import 'package:mesa_news/ui/helpers/ui_errors.dart';
-import 'package:mesa_news/ui/pages/login/login_presenter.dart';
+
+import '../../../../main/helpers/theme_colors.dart';
+import '../../../helpers/ui_errors.dart';
+import '../login_presenter.dart';
 
 class EmailInput extends StatelessWidget {
   @override
@@ -30,7 +31,7 @@ class EmailInput extends StatelessWidget {
                 children: [
                   Container(
                     height: 48,
-                    margin: snapshot.hasData? EdgeInsets.only(bottom: 10): EdgeInsets.zero,
+                    margin: snapshot.hasData ? EdgeInsets.only(bottom: 10) : EdgeInsets.zero,
                     decoration: BoxDecoration(
                       color: ThemeColors.of(context).backgroundField,
                       borderRadius: BorderRadius.circular(5),
@@ -38,10 +39,9 @@ class EmailInput extends StatelessWidget {
                   ),
                   TextFormField(
                     textAlign: TextAlign.start,
-                    textAlignVertical: snapshot.hasData? TextAlignVertical.bottom: TextAlignVertical.top,
+                    textAlignVertical: snapshot.hasData ? TextAlignVertical.bottom : TextAlignVertical.top,
                     decoration: InputDecoration(
                       errorText: snapshot.hasData ? snapshot.data.description : null,
-
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(5),
                         borderSide: BorderSide.none,

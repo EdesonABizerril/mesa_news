@@ -1,7 +1,7 @@
 import 'package:meta/meta.dart';
 
-import '../../validation/protocols/field_validation.dart';
 import '../../presentation/protocols/validation.dart';
+import '../../validation/protocols/field_validation.dart';
 
 class MinLengthValidation implements FieldValidation {
   final String field;

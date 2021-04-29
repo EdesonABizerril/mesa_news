@@ -1,12 +1,13 @@
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:mesa_news/ui/helpers/ui_errors.dart';
 import 'package:rxdart/rxdart.dart';
+
+import '../../../ui/helpers/ui_errors.dart';
 
 mixin ModularStreamValidates on Disposable {
   final _emailErrorController = BehaviorSubject<UIError>();
   Sink<UIError> get inEmailError => _emailErrorController.sink;
   Stream<UIError> get outEmailError => _emailErrorController.stream;
-  UIError get getEmailError =>  _emailErrorController.valueWrapper?.value;
+  UIError get getEmailError => _emailErrorController.valueWrapper?.value;
 
   final _passwordErrorController = BehaviorSubject<UIError>();
   Sink<UIError> get inPasswordError => _passwordErrorController.sink;
@@ -23,6 +24,4 @@ mixin ModularStreamValidates on Disposable {
     _passwordErrorController?.close();
     _isFormValidController?.close();
   }
-
-
 }

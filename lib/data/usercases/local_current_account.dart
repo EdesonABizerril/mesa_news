@@ -1,8 +1,9 @@
-import 'package:mesa_news/data/cache/cache_secure_storage.dart';
-import 'package:mesa_news/domain/entity/account_entity.dart';
-import 'package:mesa_news/domain/helpers/domain_error.dart';
-import 'package:mesa_news/domain/usercases/current_account.dart';
 import 'package:meta/meta.dart';
+
+import '../../domain/entity/account_entity.dart';
+import '../../domain/helpers/domain_error.dart';
+import '../../domain/usercases/current_account.dart';
+import '../cache/cache_secure_storage.dart';
 
 class LocalCurrentAccount implements CurrentAccount {
   final CacheSecureStorage cacheSecureStorage;
@@ -12,7 +13,7 @@ class LocalCurrentAccount implements CurrentAccount {
   Future<void> save(AccountEntity account) async {
     try {
       await cacheSecureStorage.save(key: 'token', value: account.token);
-    } catch(error) {
+    } catch (error) {
       throw DomainError.unexpected;
     }
   }
@@ -22,7 +23,7 @@ class LocalCurrentAccount implements CurrentAccount {
     try {
       final token = await cacheSecureStorage.fetch('token');
       return AccountEntity(token: token);
-    } catch(error) {
+    } catch (error) {
       throw DomainError.unexpected;
     }
   }

@@ -1,11 +1,10 @@
-import 'package:mesa_news/domain/usercases/current_account.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:meta/meta.dart';
 
-import 'package:flutter_modular/flutter_modular.dart';
-
-import '../../presentation/protocols/validation.dart';
 import '../../domain/helpers/domain_error.dart';
 import '../../domain/usercases/authentication.dart';
+import '../../domain/usercases/current_account.dart';
+import '../../presentation/protocols/validation.dart';
 import '../../ui/helpers/ui_errors.dart';
 import '../../ui/pages/login/login_presenter.dart';
 import 'mixins/mixin_modular_loading_stream.dart';

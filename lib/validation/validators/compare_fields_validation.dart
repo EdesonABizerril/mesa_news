@@ -1,6 +1,7 @@
-import 'package:mesa_news/presentation/protocols/validation.dart';
-import 'package:mesa_news/validation/protocols/field_validation.dart';
 import 'package:meta/meta.dart';
+
+import '../../presentation/protocols/validation.dart';
+import '../protocols/field_validation.dart';
 
 class CompareFieldsValidation implements FieldValidation {
   final String field;

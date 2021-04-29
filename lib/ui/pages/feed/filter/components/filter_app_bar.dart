@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:mesa_news/main/helpers/theme_colors.dart';
+import 'package:flutter_modular/flutter_modular.dart';
+
+import '../../../../../main/helpers/theme_colors.dart';
+import '../../feed_presenter.dart';
 
 class FilterAppBar extends StatelessWidget {
+  final feedPresenter = Modular.get<FeedPresenter>();
+
   @override
   Widget build(BuildContext context) {
     return AppBar(
@@ -17,7 +22,7 @@ class FilterAppBar extends StatelessWidget {
       ),
       actions: [
         TextButton(
-          onPressed: () {},
+          onPressed: feedPresenter.resetFilterPosts,
           child: Text(
             'Limpar',
             style: TextStyle(

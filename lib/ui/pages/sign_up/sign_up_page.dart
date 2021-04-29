@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:mesa_news/main/helpers/theme_colors.dart';
-import 'package:mesa_news/ui/pages/components/custom_main_app_bar.dart';
-import 'package:mesa_news/ui/pages/sign_up/components/birth_date_input.dart';
 
+import '../../../main/helpers/theme_colors.dart';
+import '../components/custom_main_app_bar.dart';
+import 'components/birth_date_input.dart';
 import 'components/email_input.dart';
 import 'components/name_input.dart';
 import 'components/password_confirmation_input.dart';

@@ -1,18 +1,18 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:intl/intl.dart';
-import 'package:mesa_news/domain/entity/post_entity.dart';
-import 'package:mesa_news/domain/helpers/domain_error.dart';
-import 'package:mesa_news/domain/usercases/load_posts.dart';
-import 'package:mesa_news/infra/http/base_data.dart';
-import 'package:mesa_news/ui/helpers/filter_period.dart';
-import 'package:mesa_news/ui/helpers/timer_converter.dart';
-import 'package:mesa_news/ui/helpers/ui_errors.dart';
-import 'package:mesa_news/ui/pages/feed/feed_presenter.dart';
-import 'package:mesa_news/ui/pages/feed/post_viewmodel.dart';
 import 'package:meta/meta.dart';
 import 'package:rxdart/rxdart.dart';
 
+import '../../domain/entity/post_entity.dart';
+import '../../domain/helpers/domain_error.dart';
+import '../../domain/usercases/load_posts.dart';
+import '../../infra/http/base_data.dart';
+import '../../ui/helpers/filter_period.dart';
+import '../../ui/helpers/timer_converter.dart';
+import '../../ui/helpers/ui_errors.dart';
+import '../../ui/pages/feed/feed_presenter.dart';
+import '../../ui/pages/feed/post_viewmodel.dart';
 import 'mixins/mixin_modular_loading_stream.dart';
 
 class ModularFeedPresenter extends Disposable with ModularLoadingStream implements FeedPresenter {
@@ -37,11 +37,33 @@ class ModularFeedPresenter extends Disposable with ModularLoadingStream implemen
   bool get getFavoriteFilter => _favoriteFilter.valueWrapper.value;
 
   final _periodFilter = BehaviorSubject<FilterPeriod>.seeded(FilterPeriod.all);
-  Sink<FilterPeriod> get inPeriodFilter => _periodFilter.sink;
   Stream<FilterPeriod> get outPeriodFilter => _periodFilter.stream;
   FilterPeriod get getPeriodFilter => _periodFilter.valueWrapper.value;
 
-  // TODO: false a logica dos filtros
+  _resetParamsPagination() {
+    isGettingMoreItemsThemes = false;
+    isMoreItemsThemesAvailable = true;
+    numberItemsForPage = 20;
+    numberCurrentPage = 1;
+    _numberOfRequestsEmpty = 0;
+  }
+
+  void setFilterPosts(FilterPeriod filterPeriod) {
+    _postViewModelList.sink.add([]);
+    _periodFilter.sink.add(filterPeriod);
+    _resetParamsPagination();
+    loadData();
+  }
+
+  void resetFilterPosts() {
+    setFilterPosts(FilterPeriod.all);
+    inFavoriteFilter.add(false);
+  }
+
+  void reloadData() {
+    resetFilterPosts();
+    loadData();
+  }
 
   Future<void> _loadPostsHighlights() async {
     try {
@@ -70,7 +92,7 @@ class ModularFeedPresenter extends Disposable with ModularLoadingStream implemen
     else if (getPeriodFilter == FilterPeriod.thisMonth)
       dateTimeResult = DateTime(dateTimeNow.year, dateTimeNow.month - 1, dateTimeNow.day);
 
-    return DateFormat('y/MM/dd').format(dateTimeResult);
+    return DateFormat('y-MM-dd').format(dateTimeResult);
   }
 
   String _queryPaginationManager(String base) {
@@ -85,12 +107,13 @@ class ModularFeedPresenter extends Disposable with ModularLoadingStream implemen
   Future<void> loadData() async {
     try {
       inIsLoading.add(true);
-      await _loadPostsHighlights();
+
+      if (highlightsPosts.isEmpty) await _loadPostsHighlights();
 
       final _listPosts = await loadPosts.load(makeApiNewsUrl(_queryPaginationManager('news')));
 
       _postViewModelList.sink.add(_requestDataModel(_listPosts));
-      numberCurrentPage = 1;
+      _resetParamsPagination();
     } on DomainError catch (error) {
       if (error == DomainError.accessDenied) {
         _postViewModelList.addError(UIError.sessionExpired);
@@ -119,14 +142,7 @@ class ModularFeedPresenter extends Disposable with ModularLoadingStream implemen
           isGettingMoreItemsThemes ||
           currentListLength < numberItemsForPage ||
           isLimitOfRequestsReached) {
-        // Quando não há mais posts disponiveis
-        debugPrint("!isMoreItemsThemesAvailable: ${!isMoreItemsThemesAvailable}");
-        debugPrint("isGettingMoreItemsThemes: $isGettingMoreItemsThemes");
-        debugPrint(
-            "currentListLength ($currentListLength) < numberItemsForPage ($numberItemsForPage): ${currentListLength < numberItemsForPage}");
-        debugPrint("isLimitOfRequestsReached: $isLimitOfRequestsReached");
-
-        debugPrint("Não há mais posts para baixar");
+        // When there are no more posts available
         return true;
       }
       numberCurrentPage++;
@@ -137,7 +153,7 @@ class ModularFeedPresenter extends Disposable with ModularLoadingStream implemen
       if (listNewPosts.isEmpty) {
         _addPostsForListInfinity([]);
         isGettingMoreItemsThemes = false;
-        debugPrint("Foi retornado dados via cache. Retorno negado!");
+        // There was no return from the API!
         return false;
       }
 
@@ -149,8 +165,6 @@ class ModularFeedPresenter extends Disposable with ModularLoadingStream implemen
           _numberOfRequestsEmpty++;
         } else
           isGettingMoreItemsThemes = currentListLength < numberItemsForPage;
-
-        debugPrint("Não foi possível retornar dados. Retorno vazio.");
         return false;
       }
 
@@ -162,7 +176,7 @@ class ModularFeedPresenter extends Disposable with ModularLoadingStream implemen
 
       isGettingMoreItemsThemes = false;
 
-      debugPrint("Foram recebidos ${listNewPosts.length} novos itens");
+      // debugPrint("Foram recebidos ${listNewPosts.length} novos itens");
       return true;
     } on DomainError catch (error) {
       if (error == DomainError.accessDenied) {
@@ -172,8 +186,6 @@ class ModularFeedPresenter extends Disposable with ModularLoadingStream implemen
       }
       return false;
     }
-
-    //TODO: Descomentar esse tratamento de erros acima
   }
 
   List<PostViewModel> _requestDataModel(List<PostEntity> listData) => listData

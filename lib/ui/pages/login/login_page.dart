@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:mesa_news/main/helpers/theme_colors.dart';
-import 'package:mesa_news/ui/pages/login/components/login_access_buttons.dart';
 
+import '../../../main/helpers/theme_colors.dart';
+import 'components/login_access_buttons.dart';
 import 'login_presenter.dart';
 
 class LoginPage extends StatelessWidget {

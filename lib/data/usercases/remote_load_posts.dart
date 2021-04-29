@@ -1,11 +1,12 @@
-import 'package:mesa_news/data/cache/cache_secure_storage.dart';
-import 'package:mesa_news/data/http/http_client.dart';
-import 'package:mesa_news/data/http/http_error.dart';
-import 'package:mesa_news/data/models/post_model.dart';
-import 'package:mesa_news/domain/entity/post_entity.dart';
-import 'package:mesa_news/domain/helpers/domain_error.dart';
-import 'package:mesa_news/domain/usercases/load_posts.dart';
 import 'package:meta/meta.dart';
+
+import '../../domain/entity/post_entity.dart';
+import '../../domain/helpers/domain_error.dart';
+import '../../domain/usercases/load_posts.dart';
+import '../cache/cache_secure_storage.dart';
+import '../http/http_client.dart';
+import '../http/http_error.dart';
+import '../models/post_model.dart';
 
 class RemoteLoadPosts implements LoadPosts {
   final HttpClient httpClient;
@@ -21,13 +22,10 @@ class RemoteLoadPosts implements LoadPosts {
     try {
       final _token = await cacheSecureStorage.fetch('token');
       final authorizedHeaders = {}..addAll({'Authorization': 'Bearer $_token'});
-      final httpResponse =
-          await httpClient.request(url: url, method: "get", headers: authorizedHeaders);
+      final httpResponse = await httpClient.request(url: url, method: "get", headers: authorizedHeaders);
       return httpResponse['data'].map<PostEntity>((json) => RemotePostModel.fromJson(json).toEntity()).toList();
     } on HttpError catch (error) {
       throw error == HttpError.forbidden ? DomainError.accessDenied : DomainError.unexpected;
     }
   }
-
-
 }

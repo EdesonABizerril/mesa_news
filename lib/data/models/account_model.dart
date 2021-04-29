@@ -1,6 +1,7 @@
-import 'package:mesa_news/data/http/http_error.dart';
-import 'package:mesa_news/domain/entity/account_entity.dart';
 import 'package:meta/meta.dart';
+
+import '../../domain/entity/account_entity.dart';
+import '../http/http_error.dart';
 
 class RemoteAccountModel {
   final String accessToken;

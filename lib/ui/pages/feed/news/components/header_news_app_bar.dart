@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:mesa_news/main/helpers/theme_colors.dart';
-import 'package:mesa_news/ui/pages/feed/post_viewmodel.dart';
+
+import '../../../../../main/helpers/theme_colors.dart';
+import '../../post_viewmodel.dart';
 
 class HeaderNewsAppBar extends StatelessWidget {
   final PostViewModel postViewModel;
@@ -22,8 +23,7 @@ class HeaderNewsAppBar extends StatelessWidget {
         ),
         trailing: IconButton(
           icon: Icon(Icons.more_horiz, color: Colors.white),
-          onPressed: () {
-          },
+          onPressed: () {},
         ),
         title: Column(
           mainAxisAlignment: MainAxisAlignment.center,

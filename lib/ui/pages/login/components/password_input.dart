@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:mesa_news/main/helpers/theme_colors.dart';
-import 'package:mesa_news/ui/helpers/ui_errors.dart';
-import 'package:mesa_news/ui/pages/login/login_presenter.dart';
+
+import '../../../../main/helpers/theme_colors.dart';
+import '../../../helpers/ui_errors.dart';
+import '../login_presenter.dart';
 
 class PasswordInput extends StatelessWidget {
   @override

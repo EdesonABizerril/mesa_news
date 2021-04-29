@@ -1,6 +1,7 @@
-import 'package:mesa_news/data/http/http_error.dart';
-import 'package:mesa_news/domain/entity/post_entity.dart';
 import 'package:meta/meta.dart';
+
+import '../../domain/entity/post_entity.dart';
+import '../http/http_error.dart';
 
 class RemotePostModel {
   final String title;
@@ -24,27 +25,20 @@ class RemotePostModel {
   });
 
   factory RemotePostModel.fromJson(Map json) {
-    if (!json.keys.toSet().containsAll([
-      'title',
-      'description',
-      'content',
-      'author',
-      'published_at',
-      'highlight',
-      'url',
-      'image_url'
-    ])) {
+    if (!json.keys
+        .toSet()
+        .containsAll(['title', 'description', 'content', 'author', 'published_at', 'highlight', 'url', 'image_url'])) {
       throw HttpError.invalidData;
     }
     return RemotePostModel(
-      title: json['title']??"",
-      description: json['description']??'',
-      content: json['content']??'',
-      author: json['author']??'',
-      publishedAt: json['published_at']??'',
-      highlight: json['highlight']??false,
-      url: json['url']??'',
-      imageUrl: json['image_url']??'',
+      title: json['title'] ?? "",
+      description: json['description'] ?? '',
+      content: json['content'] ?? '',
+      author: json['author'] ?? '',
+      publishedAt: json['published_at'] ?? '',
+      highlight: json['highlight'] ?? false,
+      url: json['url'] ?? '',
+      imageUrl: json['image_url'] ?? '',
     );
   }
 

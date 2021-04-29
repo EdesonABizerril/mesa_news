@@ -15,7 +15,13 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
 
+  // TODO: Continuar a traducao. Possibilidade para novas linguagens
+
   static _notInlinedMessages(_) => <String, Function>{
         "titulo": MessageLookupByLibrary.simpleMessage("Mesa News"),
+        "nao_ha_conexao_com_a_internet": MessageLookupByLibrary.simpleMessage("Não há conexão com a internet"),
+        "verifique_conexao":
+            MessageLookupByLibrary.simpleMessage("Verifique os dados móveis ou o Wi-Fi\ne tente novamente"),
+        "atualizar": MessageLookupByLibrary.simpleMessage("Atualizar"),
       };
 }

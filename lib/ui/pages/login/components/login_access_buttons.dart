@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mesa_news/main/helpers/theme_colors.dart';
+
+import '../../../../main/helpers/theme_colors.dart';
 
 class LoginAccessButtons extends StatelessWidget {
   final bool enableFacebookButton;
@@ -92,9 +93,7 @@ class LoginAccessButtons extends StatelessWidget {
                         Text(
                           'Não tenho conta.',
                           style: TextStyle(
-                            color: enableEmailPasswordButton
-                                ? Colors.white
-                                : ThemeColors.of(context).fontPrimary,
+                            color: enableEmailPasswordButton ? Colors.white : ThemeColors.of(context).fontPrimary,
                             fontSize: 14,
                             fontWeight: FontWeight.bold,
                           ),

@@ -2,9 +2,10 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:mesa_news/main/helpers/theme_colors.dart';
-import 'package:mesa_news/ui/pages/feed/post_viewmodel.dart';
-import 'package:mesa_news/ui/pages/feed/news/components/header_news_app_bar.dart';
+
+import '../../../../main/helpers/theme_colors.dart';
+import '../post_viewmodel.dart';
+import 'components/header_news_app_bar.dart';
 
 class NewsPage extends StatelessWidget {
   @override

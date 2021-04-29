@@ -1,5 +1,4 @@
 import '../../validation/protocols/field_validation.dart';
-
 import 'compare_fields_validation.dart';
 import 'email_validation.dart';
 import 'min_length_validation.dart';

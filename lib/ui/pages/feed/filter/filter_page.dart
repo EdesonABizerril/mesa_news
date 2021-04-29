@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:mesa_news/main/helpers/theme_colors.dart';
-import 'package:mesa_news/ui/pages/feed/filter/components/filter_app_bar.dart';
 
+import '../../../../main/helpers/theme_colors.dart';
 import 'components/drop_down_filter.dart';
+import 'components/filter_app_bar.dart';
 import 'components/switch_favorite.dart';
 
 class FilterPage extends StatelessWidget {

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:mesa_news/main/helpers/theme_colors.dart';
-import 'package:mesa_news/ui/helpers/ui_errors.dart';
 
+import '../../../../main/helpers/theme_colors.dart';
+import '../../../helpers/ui_errors.dart';
 import '../sign_up_presenter.dart';
 
 class EmailInput extends StatelessWidget {

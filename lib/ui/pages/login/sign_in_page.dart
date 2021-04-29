@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:mesa_news/main/helpers/theme_colors.dart';
-import 'package:mesa_news/ui/pages/components/custom_main_app_bar.dart';
-import 'package:mesa_news/ui/pages/login/components/login_button.dart';
-import 'package:mesa_news/ui/pages/login/components/login_access_buttons.dart';
 
+import '../../../main/helpers/theme_colors.dart';
+import '../components/custom_main_app_bar.dart';
 import 'components/email_input.dart';
+import 'components/login_access_buttons.dart';
+import 'components/login_button.dart';
 import 'components/password_input.dart';
 
 class SignInPage extends StatelessWidget {

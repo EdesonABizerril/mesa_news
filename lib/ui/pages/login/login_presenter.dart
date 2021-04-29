@@ -1,4 +1,4 @@
-import 'package:mesa_news/ui/helpers/ui_errors.dart';
+import '../../helpers/ui_errors.dart';
 
 abstract class LoginPresenter {
   Sink<UIError> get inEmailError;

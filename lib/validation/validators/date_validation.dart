@@ -1,4 +1,4 @@
-import 'package:mesa_news/presentation/protocols/validation.dart';
+import '../../presentation/protocols/validation.dart';
 
 class DateHelper {
   /*

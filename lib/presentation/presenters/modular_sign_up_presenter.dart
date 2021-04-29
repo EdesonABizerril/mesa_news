@@ -1,18 +1,20 @@
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:mesa_news/data/cache/cache_storage.dart';
-import 'package:mesa_news/domain/helpers/domain_error.dart';
-import 'package:mesa_news/domain/usercases/add_account.dart';
-import 'package:mesa_news/domain/usercases/current_account.dart';
-import 'package:mesa_news/presentation/presenters/mixins/mixin_modular_loading_stream.dart';
-import 'package:mesa_news/presentation/protocols/validation.dart';
-import 'package:mesa_news/ui/helpers/ui_errors.dart';
-import 'package:mesa_news/ui/pages/sign_up/sign_up_presenter.dart';
-import 'package:rxdart/rxdart.dart';
 import 'package:meta/meta.dart';
+import 'package:rxdart/rxdart.dart';
 
+import '../../data/cache/cache_storage.dart';
+import '../../domain/helpers/domain_error.dart';
+import '../../domain/usercases/add_account.dart';
+import '../../domain/usercases/current_account.dart';
+import '../../ui/helpers/ui_errors.dart';
+import '../../ui/pages/sign_up/sign_up_presenter.dart';
+import '../protocols/validation.dart';
+import 'mixins/mixin_modular_loading_stream.dart';
 import 'mixins/mixin_modular_stream_validates.dart';
 
-class ModularSignUpPresenter extends Disposable with ModularStreamValidates, ModularLoadingStream implements SignUpPresenter {
+class ModularSignUpPresenter extends Disposable
+    with ModularStreamValidates, ModularLoadingStream
+    implements SignUpPresenter {
   final Validation validation;
   final AddAccount addAccount;
   final CurrentAccount currentAccount;
@@ -124,15 +126,12 @@ class ModularSignUpPresenter extends Disposable with ModularStreamValidates, Mod
           break;
       }
     }
-      inIsLoading.add(false);
+    inIsLoading.add(false);
   }
 
   @override
   void validateBirthDate(String birthData) {
     _birthDate = birthData;
-
-    // TODO: implement validateBirthDate and try below methods
-    // TODO: use the class lib/validation/validators/date_validation.dart
   }
 
   @override

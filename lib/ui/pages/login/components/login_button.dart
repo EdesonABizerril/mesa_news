@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:mesa_news/main/helpers/theme_colors.dart';
-import 'package:mesa_news/ui/pages/login/login_presenter.dart';
+
+import '../../../../main/helpers/theme_colors.dart';
+import '../login_presenter.dart';
 
 class LoginButton extends StatelessWidget {
   @override

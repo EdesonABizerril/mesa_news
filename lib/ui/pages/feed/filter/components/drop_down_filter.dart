@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:mesa_news/ui/helpers/filter_period.dart';
 
+import '../../../../helpers/filter_period.dart';
 import '../../feed_presenter.dart';
 
 class DropDownFilter extends StatefulWidget {
@@ -43,7 +43,7 @@ class _DropDownFilterState extends State<DropDownFilter> {
                 selected = FilterPeriod.lastWeek;
               else if (value == FilterPeriod.thisMonth.description) selected = FilterPeriod.thisMonth;
 
-              feedPresenter.inPeriodFilter.add(selected);
+              feedPresenter.setFilterPosts(selected);
             },
             items: <String>[
               FilterPeriod.all.description,
