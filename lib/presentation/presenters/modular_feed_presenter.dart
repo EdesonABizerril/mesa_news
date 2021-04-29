@@ -111,67 +111,67 @@ class ModularFeedPresenter extends Disposable with ModularLoadingStream implemen
   }
 
   Future<bool> loadNextPageData() async {
-    // try {
-    bool isLimitOfRequestsReached = _numberOfRequestsEmpty > 3;
-    int currentListLength = _postViewModelList.valueWrapper.value.length;
+    try {
+      bool isLimitOfRequestsReached = _numberOfRequestsEmpty > 3;
+      int currentListLength = _postViewModelList.valueWrapper.value.length;
 
-    if (!isMoreItemsThemesAvailable ||
-        isGettingMoreItemsThemes ||
-        currentListLength < numberItemsForPage ||
-        isLimitOfRequestsReached) {
-      // Quando não há mais posts disponiveis
-      debugPrint("!isMoreItemsThemesAvailable: ${!isMoreItemsThemesAvailable}");
-      debugPrint("isGettingMoreItemsThemes: $isGettingMoreItemsThemes");
-      debugPrint(
-          "currentListLength ($currentListLength) < numberItemsForPage ($numberItemsForPage): ${currentListLength < numberItemsForPage}");
-      debugPrint("isLimitOfRequestsReached: $isLimitOfRequestsReached");
+      if (!isMoreItemsThemesAvailable ||
+          isGettingMoreItemsThemes ||
+          currentListLength < numberItemsForPage ||
+          isLimitOfRequestsReached) {
+        // Quando não há mais posts disponiveis
+        debugPrint("!isMoreItemsThemesAvailable: ${!isMoreItemsThemesAvailable}");
+        debugPrint("isGettingMoreItemsThemes: $isGettingMoreItemsThemes");
+        debugPrint(
+            "currentListLength ($currentListLength) < numberItemsForPage ($numberItemsForPage): ${currentListLength < numberItemsForPage}");
+        debugPrint("isLimitOfRequestsReached: $isLimitOfRequestsReached");
 
-      debugPrint("Não há mais posts para baixar");
-      return true;
-    }
-    numberCurrentPage++;
-    isGettingMoreItemsThemes = true;
+        debugPrint("Não há mais posts para baixar");
+        return true;
+      }
+      numberCurrentPage++;
+      isGettingMoreItemsThemes = true;
 
-    final listNewPosts =
-        await loadPosts.load(makeApiNewsUrl(_queryPaginationManager("news")));
+      final listNewPosts = await loadPosts.load(makeApiNewsUrl(_queryPaginationManager("news")));
 
-    if (listNewPosts.isEmpty) {
-      _addPostsForListInfinity([]);
+      if (listNewPosts.isEmpty) {
+        _addPostsForListInfinity([]);
+        isGettingMoreItemsThemes = false;
+        debugPrint("Foi retornado dados via cache. Retorno negado!");
+        return false;
+      }
+
+      bool hasItems = listNewPosts.length > 0;
+
+      if (!hasItems) {
+        if (currentListLength == 0 || currentListLength % numberItemsForPage == 0) {
+          isGettingMoreItemsThemes = isLimitOfRequestsReached;
+          _numberOfRequestsEmpty++;
+        } else
+          isGettingMoreItemsThemes = currentListLength < numberItemsForPage;
+
+        debugPrint("Não foi possível retornar dados. Retorno vazio.");
+        return false;
+      }
+
+      _numberOfRequestsEmpty = 0;
+
+      isMoreItemsThemesAvailable = listNewPosts.length == numberItemsForPage;
+
+      _addPostsForListInfinity(_requestDataModel(listNewPosts));
+
       isGettingMoreItemsThemes = false;
-      debugPrint("Foi retornado dados via cache. Retorno negado!");
+
+      debugPrint("Foram recebidos ${listNewPosts.length} novos itens");
+      return true;
+    } on DomainError catch (error) {
+      if (error == DomainError.accessDenied) {
+        _postViewModelList.addError(UIError.sessionExpired);
+      } else {
+        _postViewModelList.addError(UIError.unexpected);
+      }
       return false;
     }
-
-    bool hasItems = listNewPosts.length > 0;
-
-    if (!hasItems) {
-      if (currentListLength == 0 || currentListLength % numberItemsForPage == 0) {
-        isGettingMoreItemsThemes = isLimitOfRequestsReached;
-        _numberOfRequestsEmpty++;
-      } else
-        isGettingMoreItemsThemes = currentListLength < numberItemsForPage;
-
-      debugPrint("Não foi possível retornar dados. Retorno vazio.");
-      return false;
-    }
-
-    _numberOfRequestsEmpty = 0;
-
-    isMoreItemsThemesAvailable = listNewPosts.length == numberItemsForPage;
-
-    _addPostsForListInfinity(_requestDataModel(listNewPosts));
-
-    isGettingMoreItemsThemes = false;
-
-    debugPrint("Foram recebidos ${listNewPosts.length} novos itens");
-    return true;
-    // } on DomainError catch (error) {
-    //   if (error == DomainError.accessDenied) {
-    //     _postViewModelList.addError(UIError.sessionExpired);
-    //   } else {
-    //     _postViewModelList.addError(UIError.unexpected);
-    //   }
-    // }
 
     //TODO: Descomentar esse tratamento de erros acima
   }

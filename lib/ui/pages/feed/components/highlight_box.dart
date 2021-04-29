@@ -31,7 +31,7 @@ class HeaderBox extends StatelessWidget {
             enableInfiniteScroll: false,
             autoPlay: true,
             autoPlayInterval: Duration(seconds: 10),
-            viewportFraction: 0.8,
+            viewportFraction: 0.9,
           ),
           items: listPostViewModel.map((viewModel) => CardHighlightPost(postViewModel: viewModel)).toList(),
         ),

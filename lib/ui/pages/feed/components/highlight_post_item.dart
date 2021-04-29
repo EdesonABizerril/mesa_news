@@ -10,12 +10,12 @@ class CardHighlightPost extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _widthSize = MediaQuery.of(context).size.width * 0.9;
     final _heightSize = 175.0;
-    double _widthImage = 120.0;
+    final _widthSize = 330.0;
+    double _widthImage = 160.0;
     return Container(
       height: 175,
-      padding: EdgeInsets.only(right: 15),
+      padding: EdgeInsets.only(right: 10),
       width: _widthSize,
       child: Card(
         elevation: 0,
@@ -47,10 +47,12 @@ class CardHighlightPost extends StatelessWidget {
               child: Column(
                 children: [
                   Container(
-                    width: _widthSize - _widthImage - 80,
+                    width: 130.0,
                     height: _heightSize - 50.0,
-                    child: AutoSizeText(
+                    child: Text(
                       postViewModel.title,
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 6,
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,

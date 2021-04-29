@@ -19,6 +19,7 @@ class NewsPage extends StatelessWidget {
           preferredSize: Size.zero),
       body: SafeArea(
         child: SingleChildScrollView(
+          padding: EdgeInsets.only(bottom: 80),
           child: Column(
             children: [
               HeaderNewsAppBar(postViewModel: postViewModel),
