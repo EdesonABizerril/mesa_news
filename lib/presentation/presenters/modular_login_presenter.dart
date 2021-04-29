@@ -49,7 +49,7 @@ class ModularLoginController extends Disposable
       final account = await currentAccount.load();
       if (account?.token != null && _isGoTo) Modular.to.pushReplacementNamed('/feed');
       _isGoTo = false;
-      return null;
+      return true;
     } catch (error) {
       _isGoTo = true;
       return false;

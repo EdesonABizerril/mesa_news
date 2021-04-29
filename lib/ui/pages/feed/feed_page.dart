@@ -32,6 +32,7 @@ class _FeedPageState extends State<FeedPage> {
         centerTitle: true,
         title: Text('Mesa News'),
         brightness: Brightness.dark,
+        leading: Container(),
         backgroundColor: ThemeColors.of(context).primary,
         actions: [
           IconButton(
