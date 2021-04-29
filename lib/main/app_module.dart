@@ -9,13 +9,14 @@ import 'package:mesa_news/data/usercases/remote_load_posts.dart';
 import 'package:mesa_news/domain/usercases/add_account.dart';
 import 'package:mesa_news/domain/usercases/current_account.dart';
 import 'package:mesa_news/domain/usercases/load_posts.dart';
-import 'package:mesa_news/domain/usercases/load_posts_highlights.dart';
 import 'package:mesa_news/infra/cache/local_storage_adapter.dart';
 import 'package:mesa_news/presentation/presenters/modular_feed_presenter.dart';
 import 'package:mesa_news/ui/pages/feed/feed_page.dart';
 import 'package:mesa_news/ui/pages/feed/feed_presenter.dart';
+import 'package:mesa_news/ui/pages/feed/filter/filter_page.dart';
 import 'package:mesa_news/ui/pages/login/login_presenter.dart';
 import 'package:mesa_news/ui/pages/login/sign_in_page.dart';
+import 'package:mesa_news/ui/pages/feed/news/news_page.dart';
 import 'package:mesa_news/ui/pages/sign_up/sign_up_page.dart';
 import 'package:mesa_news/ui/pages/sign_up/sign_up_presenter.dart';
 
@@ -38,12 +39,9 @@ class AppModule extends Module {
     Bind.factory((i) => Client()),
     Bind.factory<HttpClient>((i) => HttpAdapter(i.get<Client>())),
     Bind.factory<Validation>((i) => ValidationComposite()),
-    Bind.factory<Authentication>(
-        (i) => RemoteAuthentication(httpClient: i.get<HttpClient>(), url: makeApiAuthUrl('signin'))),
+    Bind.factory<Authentication>((i) => RemoteAuthentication(httpClient: i.get<HttpClient>(), url: makeApiAuthUrl('signin'))),
     Bind.factory<AddAccount>((i) => RemoteAddAccount(httpClient: i.get(), url: makeApiAuthUrl('signup'))),
-    Bind.factory<LoadPosts>((i) => RemoteLoadPosts(httpClient: i.get(), url: makeApiClientUrl('news'))),
-    Bind.factory<LoadPostsHighlights>(
-        (i) => RemoteLoadPosts(httpClient: i.get(), url: makeApiClientUrl('news/highlights'))),
+    Bind.factory<LoadPosts>((i) => RemoteLoadPosts(httpClient: i.get(), cacheSecureStorage: i.get())),
 
     // Local
     Bind.factory((i) => FlutterSecureStorage()),
@@ -52,11 +50,9 @@ class AppModule extends Module {
     Bind.factory<CurrentAccount>((i) => LocalCurrentAccount(cacheSecureStorage: i.get())),
 
     // presenters
-    Bind.singleton<LoginPresenter>(
-        (i) => ModularLoginController(validation: i.get(), authentication: i.get(), currentAccount: i.get())),
-    Bind.singleton<SignUpPresenter>((i) => ModularSignUpPresenter(
-        validation: i.get(), addAccount: i.get(), currentAccount: i.get(), cacheStorage: i.get())),
-    Bind.singleton<FeedPresenter>((i) => ModularFeedPresenter(loadPosts: i.get(), loadPostsHighlights: i.get())),
+    Bind.singleton<LoginPresenter>((i) => ModularLoginController(validation: i.get(), authentication: i.get(), currentAccount: i.get())),
+    Bind.singleton<SignUpPresenter>((i) => ModularSignUpPresenter(validation: i.get(), addAccount: i.get(), currentAccount: i.get(), cacheStorage: i.get())),
+    Bind.singleton<FeedPresenter>((i) => ModularFeedPresenter(loadPosts: i.get<LoadPosts>())),
   ];
 
   @override
@@ -65,5 +61,7 @@ class AppModule extends Module {
     ChildRoute('/signIn', child: (_, __) => SignInPage()),
     ChildRoute('/signUp', child: (_, __) => SignUpPage()),
     ChildRoute('/feed', child: (_, __) => FeedPage()),
+    ChildRoute('/news', child: (_, __) => NewsPage()),
+    ChildRoute('/filter', child: (_, __) => FilterPage()),
   ];
 }

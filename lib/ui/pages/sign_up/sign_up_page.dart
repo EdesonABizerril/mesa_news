@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mesa_news/main/helpers/theme_colors.dart';
-import 'package:mesa_news/ui/pages/components/custom_app_bar.dart';
+import 'package:mesa_news/ui/pages/components/custom_main_app_bar.dart';
 import 'package:mesa_news/ui/pages/sign_up/components/birth_date_input.dart';
 
 import 'components/email_input.dart';
@@ -16,7 +16,7 @@ class SignUpPage extends StatelessWidget {
       backgroundColor: ThemeColors.of(context).backgroundColor,
       appBar: PreferredSize(
           preferredSize: const Size.fromHeight(60),
-          child: CustomAppBar(
+          child: CustomMainAppBar(
             title: Text("Cadastrar"),
           )),
       body: SafeArea(

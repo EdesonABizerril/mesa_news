@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mesa_news/main/helpers/theme_colors.dart';
-import 'package:mesa_news/ui/pages/components/custom_app_bar.dart';
+import 'package:mesa_news/ui/pages/components/custom_main_app_bar.dart';
 import 'package:mesa_news/ui/pages/login/components/login_button.dart';
 import 'package:mesa_news/ui/pages/login/components/login_access_buttons.dart';
 
@@ -15,7 +15,7 @@ class SignInPage extends StatelessWidget {
       backgroundColor: ThemeColors.of(context).backgroundColor,
       appBar: PreferredSize(
           preferredSize: Size.fromHeight(60),
-          child: CustomAppBar(
+          child: CustomMainAppBar(
             title: Text("Entrar com e-mail"),
           )),
       body: SafeArea(

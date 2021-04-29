@@ -3,16 +3,50 @@ import 'package:flutter/material.dart';
 import '../post_viewmodel.dart';
 import 'highlight_post_item.dart';
 
-class HighlightBox extends StatelessWidget {
+class HeaderBox extends StatelessWidget {
   final List<PostViewModel> listPostViewModel;
 
-  const HighlightBox({Key key, @required this.listPostViewModel}) : super(key: key);
+  const HeaderBox({Key key, @required this.listPostViewModel}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return CarouselSlider(
-      options: CarouselOptions(enlargeCenterPage: true, aspectRatio: 1),
-      items: listPostViewModel.map((viewModel) => HighlightPostItem(postViewModel: viewModel)).toList(),
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Container(
+          margin: EdgeInsets.only(left: 16, bottom: 15),
+          child: Text(
+            'Destaques',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 20,
+            ),
+          ),
+        ),
+        CarouselSlider(
+          options: CarouselOptions(
+            height: 180,
+            enableInfiniteScroll: false,
+            autoPlay: true,
+            autoPlayInterval: Duration(seconds: 10),
+            viewportFraction: 0.8,
+          ),
+          items: listPostViewModel.map((viewModel) => CardHighlightPost(postViewModel: viewModel)).toList(),
+        ),
+
+        Container(
+          margin: EdgeInsets.only(left: 16, top: 30, bottom: 15),
+          child: Text(
+            'Últimas notícias',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 20,
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

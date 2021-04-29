@@ -1,6 +1,6 @@
 import 'package:mesa_news/data/http/http_client.dart';
 import 'package:mesa_news/data/http/http_error.dart';
-import 'package:mesa_news/data/models/remote_account_model.dart';
+import 'package:mesa_news/data/models/account_model.dart';
 import 'package:mesa_news/domain/entity/account_entity.dart';
 import 'package:mesa_news/domain/helpers/domain_error.dart';
 import 'package:mesa_news/domain/usercases/add_account.dart';

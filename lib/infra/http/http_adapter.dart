@@ -13,7 +13,7 @@ class HttpAdapter implements HttpClient {
   Future<dynamic> request({@required String url, @required String method, Map body, Map headers}) async {
     final defaultHeaders = headers?.cast<String, String>() ?? {}
       ..addAll({'Content-type': 'application/json'});
-    final jsonBody = body != null ? jsonEncode(body) : null;
+    final jsonBody = body != null ? jsonEncode(body) : '';
     var response = Response('', 500);
     Future<Response> futureResponse;
     try {

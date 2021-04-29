@@ -11,7 +11,9 @@ import '../../ui/pages/login/login_presenter.dart';
 import 'mixins/mixin_modular_loading_stream.dart';
 import 'mixins/mixin_modular_stream_validates.dart';
 
-class ModularLoginController extends Disposable with ModularStreamValidates, ModularLoadingStream implements LoginPresenter {
+class ModularLoginController extends Disposable
+    with ModularStreamValidates, ModularLoadingStream
+    implements LoginPresenter {
   final Validation validation;
   final Authentication authentication;
   final CurrentAccount currentAccount;
@@ -38,16 +40,19 @@ class ModularLoginController extends Disposable with ModularStreamValidates, Mod
           break;
       }
     }
-      inIsLoading.add(false);
+    inIsLoading.add(false);
   }
 
+  bool _isGoTo = true;
   Future<bool> checkAccount({int durationInSeconds = 2}) async {
     await Future.delayed(Duration(seconds: durationInSeconds));
     try {
       final account = await currentAccount.load();
-      if (account?.token != null) Modular.to.pushReplacementNamed('/feed');
+      if (account?.token != null && _isGoTo) Modular.to.pushReplacementNamed('/feed');
+      _isGoTo = false;
       return null;
     } catch (error) {
+      _isGoTo = true;
       return false;
     }
   }

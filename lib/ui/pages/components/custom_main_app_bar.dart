@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:mesa_news/main/helpers/theme_colors.dart';
 import 'package:meta/meta.dart';
 
-class CustomAppBar extends StatelessWidget {
+class CustomMainAppBar extends StatelessWidget {
   final Text title;
 
-  const CustomAppBar({
+  const CustomMainAppBar({
     @required this.title,
     Key key,
   }) : super(key: key);

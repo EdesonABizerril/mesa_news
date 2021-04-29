@@ -37,14 +37,14 @@ class RemotePostModel {
       throw HttpError.invalidData;
     }
     return RemotePostModel(
-      title: json['title'],
-      description: json['description'],
-      content: json['content'],
-      author: json['author'],
-      publishedAt: json['published_at'],
-      highlight: json['highlight'],
-      url: json['url'],
-      imageUrl: json['image_url'],
+      title: json['title']??"",
+      description: json['description']??'',
+      content: json['content']??'',
+      author: json['author']??'',
+      publishedAt: json['published_at']??'',
+      highlight: json['highlight']??false,
+      url: json['url']??'',
+      imageUrl: json['image_url']??'',
     );
   }
 

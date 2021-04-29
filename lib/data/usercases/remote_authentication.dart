@@ -4,7 +4,7 @@ import '../../domain/helpers/domain_error.dart';
 import '../../domain/entity/account_entity.dart';
 import '../../domain/usercases/authentication.dart';
 
-import '../models/remote_account_model.dart';
+import '../models/account_model.dart';
 import '../http/http_error.dart';
 import '../http/http_client.dart';
 

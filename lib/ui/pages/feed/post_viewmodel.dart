@@ -6,6 +6,7 @@ class PostViewModel {
   final String content;
   final String author;
   final String publishedAt;
+  final String relativePublishedAt;
   final bool highlight;
   final String url;
   final String imageUrl;
@@ -16,6 +17,7 @@ class PostViewModel {
     @required this.content,
     @required this.author,
     @required this.publishedAt,
+    @required this.relativePublishedAt,
     @required this.highlight,
     @required this.url,
     @required this.imageUrl,

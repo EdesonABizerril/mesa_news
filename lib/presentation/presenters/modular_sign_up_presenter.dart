@@ -113,7 +113,7 @@ class ModularSignUpPresenter extends Disposable with ModularStreamValidates, Mod
       ));
       await currentAccount.save(account);
       if (_birthDate.isNotEmpty) await cacheStorage.put(key: "birthDate", value: _birthDate);
-      Modular.to.pushNamed("/feed");
+      Modular.to.pushReplacementNamed('/feed');
     } on DomainError catch (error) {
       switch (error) {
         case DomainError.emailInUse:
